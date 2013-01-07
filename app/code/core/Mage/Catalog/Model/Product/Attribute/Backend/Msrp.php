@@ -41,6 +41,10 @@ class Mage_Catalog_Model_Product_Attribute_Backend_Msrp extends Mage_Catalog_Mod
      */
     public function beforeSave($product)
     {
+        //Customize by vargento
+        if (0 == (int)Mage::getStoreConfig(Mage_Catalog_Model_Product::FLAG_BUNDLE_ENABLE)){
+            return parent::beforeSave($product);
+        } else {
         if (!($product instanceof Mage_Catalog_Model_Product)
             || $product->getTypeId() != Mage_Catalog_Model_Product_Type::TYPE_BUNDLE
             || $product->getPriceType() != Mage_Bundle_Model_Product_Price::PRICE_TYPE_DYNAMIC
@@ -58,5 +62,6 @@ class Mage_Catalog_Model_Product_Attribute_Backend_Msrp extends Mage_Catalog_Mod
             $product->setData($attributeCode, 0);
         }
         return $this;
+                }
     }
 }

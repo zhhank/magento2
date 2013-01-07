@@ -68,11 +68,14 @@ class Mage_Catalog_Block_Product_Widget_New extends Mage_Catalog_Block_Product_N
     protected function _construct()
     {
         parent::_construct();
+        //Customize by vargento
+        if (0 == (int)Mage::getStoreConfig(Mage_Catalog_Model_Product::FLAG_BUNDLE_ENABLE)){
         $this->addPriceBlockType(
             'bundle',
             'Mage_Bundle_Block_Catalog_Product_Price',
             'bundle/catalog/product/price.phtml'
         );
+        }
     }
 
     /**

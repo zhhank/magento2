@@ -42,6 +42,10 @@
  */
 class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
 {
+    //Customize by vargento
+    const FLAG_BUNDLE_ENABLE    = 'flag_bundle';
+    
+    
     /**
      * Entity code.
      * Can be used as part of method name for entity processing
