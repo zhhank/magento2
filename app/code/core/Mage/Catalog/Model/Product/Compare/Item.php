@@ -100,9 +100,10 @@ class Mage_Catalog_Model_Product_Compare_Item extends Mage_Core_Model_Abstract
      * @param Mage_Customer_Model_Customer $customer
      * @return Mage_Catalog_Model_Product_Compare_Item
      */
-    public function addCustomerData(Mage_Customer_Model_Customer $customer)
+    //public function addCustomerData(Mage_Customer_Model_Customer $customer)
+    public function addCustomerData($customerid)            
     {
-        $this->setCustomerId($customer->getId());
+        $this->setCustomerId($customerid);
         return $this;
     }
 
@@ -209,7 +210,7 @@ class Mage_Catalog_Model_Product_Compare_Item extends Mage_Core_Model_Abstract
     public function getCustomerId()
     {
         if (!$this->hasData('customer_id')) {
-            $customerId = Mage::getSingleton('Mage_Customer_Model_Session')->getCustomerId();
+            $customerId = Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->getCustomerId();
             $this->setData('customer_id', $customerId);
         }
         return $this->getData('customer_id');

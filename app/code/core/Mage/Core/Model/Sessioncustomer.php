@@ -19,45 +19,69 @@
  * needs please refer to http://www.magentocommerce.com for more information.
  *
  * @category    Mage
- * @package     Mage_Catalog
+ * @package     Mage_Customer
  * @copyright   Copyright (c) 2012 X.commerce, Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 /**
- * Product send to friend block
+ * Customer session model
  *
  * @category   Mage
- * @package    Mage_Catalog
- * @module     Catalog
+ * @package    Mage_Core
+ * @author      zhhank@github.com
  */
-class Mage_Catalog_Block_Product_Send extends Mage_Catalog_Block_Product_Abstract
+class Mage_Core_Model_Customersession extends Mage_Core_Model_Session_Abstract
 {
+  
+   
 
     /**
-     * Retrieve username for form field
+     * Retrieve customer model object
      *
-     * @return string
+     * @return Mage_Customer_Model_Customer
      */
-    public function getUserName()
+    public function getCustomer()
     {
-        return Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->getCustomer()->getName();
+        return null;
     }
 
-    public function getEmail()
+    
+
+    /**
+     * Retrieve customer id from current session
+     *
+     * @return int|null
+     */
+    public function getCustomerId()
     {
-        return (string)Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->getCustomer()->getEmail();
+        return null;
     }
 
-    public function getProductId()
+   
+
+    /**
+     * Get customer group id
+     * If customer is not logged in system, 'not logged in' group id will be returned
+     *
+     * @return int
+     */
+    public function getCustomerGroupId()
     {
-        return $this->getRequest()->getParam('id');
+
+        return 0;
     }
 
-    public function getMaxRecipients()
+    /**
+     * Checking customer login status
+     *
+     * @return bool
+     */
+    public function isLoggedIn()
     {
-        $sendToFriendModel = Mage::registry('send_to_friend_model');
-        return $sendToFriendModel->getMaxRecipients();
+        return false;
     }
+
+    
+
 }

@@ -58,7 +58,7 @@ class Mage_Catalog_Model_Layer extends Varien_Object
         if ($this->_stateKey === null) {
             $this->_stateKey = 'STORE_'.Mage::app()->getStore()->getId()
                 . '_CAT_' . $this->getCurrentCategory()->getId()
-                . '_CUSTGROUP_' . Mage::getSingleton('Mage_Customer_Model_Session')->getCustomerGroupId();
+                . '_CUSTGROUP_' . Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->getCustomerGroupId();
         }
 
         return $this->_stateKey;

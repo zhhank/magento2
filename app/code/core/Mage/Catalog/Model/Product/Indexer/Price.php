@@ -77,7 +77,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
         Mage_Core_Model_Config_Data::ENTITY => array(
             Mage_Index_Model_Event::TYPE_SAVE
         ),
-        Mage_Customer_Model_Group::ENTITY => array(
+        Mage_Core_Model_Sessioncustomergroup::ENTITY => array(
             Mage_Index_Model_Event::TYPE_SAVE
         )
     );
@@ -156,7 +156,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
             } else {
                 $result = false;
             }
-        } elseif ($event->getEntity() == Mage_Customer_Model_Group::ENTITY) {
+        } elseif ($event->getEntity() == Mage_Core_Model_Sessioncustomergroup::ENTITY) {
             $result = $event->getDataObject() && $event->getDataObject()->isObjectNew();
         } else {
             $result = parent::matchEvent($event);
@@ -247,7 +247,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
         $event->addNewData(self::EVENT_MATCH_RESULT_KEY, true);
         $entity = $event->getEntity();
 
-        if ($entity == Mage_Core_Model_Config_Data::ENTITY || $entity == Mage_Customer_Model_Group::ENTITY) {
+        if ($entity == Mage_Core_Model_Config_Data::ENTITY || $entity == Mage_Core_Model_Sessioncustomergroup::ENTITY) {
             $process = $event->getProcess();
             $process->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
         } else if ($entity == Mage_Catalog_Model_Product::ENTITY) {

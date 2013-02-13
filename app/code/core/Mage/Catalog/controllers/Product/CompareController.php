@@ -76,7 +76,7 @@ class Mage_Catalog_Product_CompareController extends Mage_Core_Controller_Front_
     {
         $productId = (int) $this->getRequest()->getParam('product');
         if ($productId
-            && (Mage::getSingleton('Mage_Log_Model_Visitor')->getId() || Mage::getSingleton('Mage_Customer_Model_Session')->isLoggedIn())
+            && (Mage::getSingleton('Mage_Log_Model_Visitor')->getId() || Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->isLoggedIn())
         ) {
             $product = Mage::getModel('Mage_Catalog_Model_Product')
                 ->setStoreId(Mage::app()->getStore()->getId())
@@ -109,12 +109,16 @@ class Mage_Catalog_Product_CompareController extends Mage_Core_Controller_Front_
             if($product->getId()) {
                 /** @var $item Mage_Catalog_Model_Product_Compare_Item */
                 $item = Mage::getModel('Mage_Catalog_Model_Product_Compare_Item');
-                if(Mage::getSingleton('Mage_Customer_Model_Session')->isLoggedIn()) {
-                    $item->addCustomerData(Mage::getSingleton('Mage_Customer_Model_Session')->getCustomer());
+                if(Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->isEnabled()){
+                if(Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->isLoggedIn()) {
+                    $item->addCustomerData(Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->getCustomerId());
                 } elseif ($this->_customerId) {
                     $item->addCustomerData(
-                        Mage::getModel('Mage_Customer_Model_Customer')->load($this->_customerId)
+                        $this->_customerId
                     );
+                } else {
+                    $item->addVisitorId(Mage::getSingleton('Mage_Log_Model_Visitor')->getId());
+                }
                 } else {
                     $item->addVisitorId(Mage::getSingleton('Mage_Log_Model_Visitor')->getId());
                 }
@@ -145,8 +149,8 @@ class Mage_Catalog_Product_CompareController extends Mage_Core_Controller_Front_
     {
         $items = Mage::getResourceModel('Mage_Catalog_Model_Resource_Product_Compare_Item_Collection');
 
-        if (Mage::getSingleton('Mage_Customer_Model_Session')->isLoggedIn()) {
-            $items->setCustomerId(Mage::getSingleton('Mage_Customer_Model_Session')->getCustomerId());
+        if (Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->isLoggedIn()) {
+            $items->setCustomerId(Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->getCustomerId());
         } elseif ($this->_customerId) {
             $items->setCustomerId($this->_customerId);
         } else {

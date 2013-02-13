@@ -72,7 +72,7 @@ class Mage_Catalog_Block_Navigation extends Mage_Core_Block_Template
             'CATALOG_NAVIGATION',
             Mage::app()->getStore()->getId(),
             Mage::getDesign()->getDesignTheme()->getCacheKey(),
-            Mage::getSingleton('Mage_Customer_Model_Session')->getCustomerGroupId(),
+            Mage::getSingleton('Mage_Core_Model_Sessioncustomer')->getCustomerGroupId(),
             'template' => $this->getTemplate(),
             'name' => $this->getNameInLayout(),
             $this->getCurrenCategoryKey()
